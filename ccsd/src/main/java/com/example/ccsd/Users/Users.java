@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Base64;
 
 @Document(collection = "user")
-public class users {
+public class Users {
 
     @Id
     private String id;
