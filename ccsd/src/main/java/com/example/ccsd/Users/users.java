@@ -4,6 +4,8 @@ package com.example.ccsd.Users;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Base64;
+
 @Document(collection = "user")
 public class users {
 
@@ -19,6 +21,7 @@ public class users {
     private String username;
     private String dob;
     private byte[] profPic;
+
 
     // Getters and Setters
     public String getId() {
@@ -111,7 +114,11 @@ public class users {
 
     // Utility method to convert image to Base64 String
     public String getImageAsBase64() {
-        return java.util.Base64.getEncoder().encodeToString(this.profPic);
+        return Base64.getEncoder().encodeToString(this.profPic);
+    }
+
+    public void setImageAsBase64(String base64String) {
+        this.profPic = Base64.getDecoder().decode(base64String);
     }
 
     // Optional toString method for debugging
@@ -129,5 +136,7 @@ public class users {
                 ", dob='" + dob + '\'' +
                 '}';
     }
+
+
 }
 
