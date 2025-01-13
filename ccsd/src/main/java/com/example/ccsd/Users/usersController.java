@@ -5,6 +5,7 @@ package com.example.ccsd.Users;
 
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,37 +34,13 @@ public class usersController {
     @Autowired
     private usersService usersService;
 
-    // @GetMapping
-    // public List<users> getAllUsers() {
-    //     return usersService.getAllUsers();
-
-    // }
-
-    //  // Endpoint to get all users
-    //  @GetMapping
-    //  public ResponseEntity<List<users>> getAllUsersTeam() {
-    //      List<users> usersList = usersService.getAllUsers();
-    //      return ResponseEntity.ok(usersList);
-    //  }
- 
-   
-
-    
     @GetMapping
-    public List<users> getAllUsers() {
-    List<users> usersList = usersService.getAllUsers();  // Get all products
-
-    // Process each users in the list
-    return usersList.stream()
-            .map(users -> {
-                // Add Base64 encoded image to each users
-                users.setImageStore64String(users.getImageAsBase64());
-                return users;
-            })
-            .collect(Collectors.toList());  // Collect the processed users back into a list
+    public ResponseEntity<List<users>> getAllUsers() {
+        List<users> usersList = usersService.getAllUsers();
+        return ResponseEntity.ok(usersList);
     }
 
-    // get user by id 
+    // get user by id
     @GetMapping("/{id}")
     public ResponseEntity<users> getUserById(@PathVariable String UserId) {
         return usersService.getUserById(UserId)
@@ -71,22 +48,6 @@ public class usersController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // @PostMapping
-    // public users addUser(@RequestBody users users) {
-    //     return usersService.addUser(users);
-  
-    // }
-
-    //prev addUser
-    // @PostMapping
-    // public users addUser(@RequestBody users users, @RequestParam("file") MultipartFile profPic) {
-    //     return usersService.addUser(users);
-  
-    // }
-// addUser v2
-    ////////////////////////////////////////////
-    /// //email, password, firstName, lastName, phone, address, role, userName, dob, image --sir's example
-    
  @PostMapping
     public ResponseEntity<Map<String, Object>> addUser(
             @RequestParam("email") String email,
@@ -98,13 +59,11 @@ public class usersController {
             @RequestParam("role") String role,
             @RequestParam("username") String username,
             @RequestParam("dob") String dob,
-           
-           
             @RequestParam("profPic") MultipartFile profPic) throws IOException {
 
         // Convert the image to a byte array
         byte[] imageBytes = profPic.getBytes();  // Get image data
-
+        String base64String = Base64.getEncoder().encodeToString(imageBytes);
         // Create a new users instance
         users users = new users();
         users.setEmail(email);
@@ -120,7 +79,6 @@ public class usersController {
       
         users.setProfPic(imageBytes); //store image as byte array
 
-
         // Save the users in MongoDB
         users savedusers = usersService.addUser(users);
 
@@ -132,43 +90,6 @@ public class usersController {
         return ResponseEntity.ok(response);
     }
 
-//     @RestController
-// @RequestMapping("/api")
-// public class TeamController {
-
-    // @Autowired
-    // private UserRepository userRepository;
-
-    // @GetMapping("/team")
-    // public List<users> getTeam() {
-    //     return usersService.findAll()
-    //             .stream()
-    //             .map(user -> new users(user.getFirstName(), user.getRole(), user.getProfPic()))
-    //             .collect(Collectors.toList());
-    // }
-
-
-
-
-
-    ///////////////////////////////////////
-
-//     @PostMapping("/{id}/uploadImage")
-// public ResponseEntity<String> uploadUserImage(@PathVariable String id,@RequestParam("file") MultipartFile file) {
-//     try {
-//         // Validate file type
-//         if (!file.getContentType().startsWith("image/")) {
-//             return ResponseEntity.badRequest().body("File type not supported. Please upload an image.");
-//         }
-
-//         // Save the file (in database or file system)
-//         String imageUrl = usersService.addUser(users, profPic);
-        
-//         return ResponseEntity.ok(imageUrl); // Return the file URL or success message
-//     } catch (Exception e) {
-//         e.printStackTrace();
-//         return ResponseEntity.status(500).body("Error uploading the file.");
-//     }
 
     @PutMapping("/{id}")
     public ResponseEntity<users> updateUser(@PathVariable String id, @RequestBody users usersDetails) {
@@ -185,40 +106,6 @@ public class usersController {
         return ResponseEntity.noContent().build();
     }
 
-
-
-    //  @PostMapping("auth/createAd")
-    // public Ads createAd(
-    //     @RequestParam("adsImages") MultipartFile[] adsImages,
-    //     // Add other parameters
-    // ) {
-    //     String uploadDirectory = "src/main/resources/static/images/ads";
-    //     String adsImagesString = "";
-
-    //     for (MultipartFile imageFile : adsImages) {
-    //         adsImagesString += usersService.addUser(uploadDirectory, imageFile) + ",";
-    //     }
-
-    //     // Save the adsImagesString in your database
-    //     // You can also associate it with other data in your Ads object
-    // }
-
-    // @PostMapping("/signin")
-    // public ResponseEntity<?> signIn(@RequestBody users signInRequest) {
-    //     boolean isValidUser = usersService.getUserByEmailPassword(users.getEmail(), users.getPassword());
-
-    //     if (isValidUser ) {
-          
-
-    //          // Return a success response with a redirection URL
-    //          Map<String, String> response = new HashMap<>();
-    //          response.put("redirectUrl", "http://localhost:3000/dashboard-admin");
-    //          return ResponseEntity.ok(response);
-    //     } else {
-    //         // Return an error response
-    //         return ResponseEntity.status(401).body("Invalid email or password.");
-    //     }
-    // }
 
     @PostMapping("/signin")
 public ResponseEntity<?> signIn(@RequestBody users signInRequest) {
@@ -242,4 +129,5 @@ public ResponseEntity<?> signIn(@RequestBody users signInRequest) {
 
 
     
+
 
