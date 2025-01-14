@@ -22,8 +22,9 @@ public class ProductsService {
         return product;
     }
 
-    public ResponseEntity<Products> getProductsById(String id) {
-        return null;
+    public Products getProductsById(String id) {
+        return ProductsRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
     }
 
     public Products updateProducts(String id, Products productsDetail) {
