@@ -23,20 +23,22 @@ import org.springframework.web.multipart.MultipartFile;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/products")
-public class productsController {
+public class ProductsController {
     
     @Autowired
-    private productsService productsService;
+    private ProductsService productsService;
 
     @GetMapping
-    public List<products> getAllProducts() {
-        List<products> productsList = productsService.getAllProducts();  // Get all products
+    public List<Products> getAllProducts() {
+        List<Products> productsList = productsService.getAllProducts();  // Get all products
+
+        System.out.println("getallproducts");
 
         // Process each product in the list
         return productsList.stream()
                 .map(product -> {
                     // Add Base64 encoded image to each product
-                    product.setImageStore64String(product.getImageAsBase64());
+                    product.setImageStore(product.getImageStore());
                     return product;
                 })
                 .collect(Collectors.toList());  // Collect the processed products back into a list
@@ -44,10 +46,11 @@ public class productsController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<products> getProductskById(@PathVariable String id) {
-        return productsService.getProductsById(id) // Get products by slug
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Products> getProductskById(@PathVariable String id) {
+//        return productsService.getProductsById(id) // Get products by slug
+//                .map(ResponseEntity::ok)
+//                .orElse(ResponseEntity.notFound().build());
+        return null;
         }
 
     // add product based on the 
@@ -66,7 +69,7 @@ public class productsController {
             byte[] imageBytes = image.getBytes();  // Get image data
 
             // Create a new Product instance
-            products product = new products();
+            Products product = new Products();
             product.setTitle(title);
             product.setPostSlug(postSlug);
             product.setPostShortDescription(postShortDescription);
@@ -77,7 +80,7 @@ public class productsController {
             product.setImageStore(imageBytes);  // Store image as byte array
 
             // Save the product in MongoDB
-            products savedProduct = productsService.addProducts(product);
+            Products savedProduct = productsService.addProducts(product);
 
             // Return a response
             Map<String, Object> response = new HashMap<>();
@@ -87,19 +90,19 @@ public class productsController {
             return ResponseEntity.ok(response);
     }
 
-    // @PutMapping("/{id}")
-    // public ResponseEntity<products> updateProducts(@PathVariable String id, @RequestBody products ProductsDetail) {
-    //     products updatedProducts = productsService.updateProducts(id, ProductsDetail);
-    //     if (updatedProducts != null) {
-    //         return ResponseEntity.ok(updatedProducts);
-    //     }
-    //     return ResponseEntity.notFound().build();
-    // }
+    @PutMapping("/{id}")
+    public ResponseEntity<Products> updateProducts(@PathVariable String id, @RequestBody Products ProductsDetail) {
+         Products updatedProducts = productsService.updateProducts(id, ProductsDetail);
+         if (updatedProducts != null) {
+             return ResponseEntity.ok(updatedProducts);
+         }
+         return ResponseEntity.notFound().build();
+     }
 
-    // @DeleteMapping("/{id}")
-    // public ResponseEntity<Void> deleteProducts(@PathVariable String id) {
-    //     productsService.deleteProducts(id);
-    //     return ResponseEntity.noContent().build();
-    // }
+     @DeleteMapping("/{id}")
+     public ResponseEntity<Void> deleteProducts(@PathVariable String id) {
+         productsService.deleteProducts(id);
+         return ResponseEntity.noContent().build();
+     }
 
 }
