@@ -22,6 +22,21 @@ public class Users {
     private String dob;
     private byte[] profPic;
 
+    public Users(String firstName, String email, String password, String lastName, String phoneNumber, String address, String role, String username, String dob, byte[] profPic) {
+        this.firstName = firstName;
+        this.email = email;
+        this.password = password;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.role = role;
+        this.username = username;
+        this.dob = dob;
+        this.profPic = profPic;
+    }
+
+    public Users() {
+    }
 
     // Getters and Setters
     public String getId() {
