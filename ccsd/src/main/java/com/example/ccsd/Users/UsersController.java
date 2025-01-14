@@ -9,7 +9,6 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,20 +28,20 @@ import org.springframework.web.multipart.MultipartFile;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/users")
-public class usersController {
+public class UsersController {
 
     @Autowired
-    private usersService usersService;
+    private UsersService usersService;
 
     @GetMapping
-    public ResponseEntity<List<users>> getAllUsers() {
-        List<users> usersList = usersService.getAllUsers();
+    public ResponseEntity<List<Users>> getAllUsers() {
+        List<Users> usersList = usersService.getAllUsers();
         return ResponseEntity.ok(usersList);
     }
 
     // get user by id
     @GetMapping("/{id}")
-    public ResponseEntity<users> getUserById(@PathVariable String UserId) {
+    public ResponseEntity<Users> getUserById(@PathVariable String UserId) {
         return usersService.getUserById(UserId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -65,7 +64,7 @@ public class usersController {
         byte[] imageBytes = profPic.getBytes();  // Get image data
         String base64String = Base64.getEncoder().encodeToString(imageBytes);
         // Create a new users instance
-        users users = new users();
+        Users users = new Users();
         users.setEmail(email);
         users.setPassword(password);
         users.setFirstName(firstName);
@@ -80,7 +79,7 @@ public class usersController {
         users.setProfPic(imageBytes); //store image as byte array
 
         // Save the users in MongoDB
-        users savedusers = usersService.addUser(users);
+        Users savedusers = usersService.addUser(users);
 
         // Return a response
         Map<String, Object> response = new HashMap<>();
@@ -92,8 +91,8 @@ public class usersController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<users> updateUser(@PathVariable String id, @RequestBody users usersDetails) {
-        users updatedusers = usersService.updateUser(id, usersDetails);
+    public ResponseEntity<Users> updateUser(@PathVariable String id, @RequestBody Users usersDetails) {
+        Users updatedusers = usersService.updateUser(id, usersDetails);
         if (updatedusers != null) {
             return ResponseEntity.ok(updatedusers);
         }
@@ -108,9 +107,9 @@ public class usersController {
 
 
     @PostMapping("/signin")
-public ResponseEntity<?> signIn(@RequestBody users signInRequest) {
+public ResponseEntity<?> signIn(@RequestBody Users signInRequest) {
     // Use the service to fetch the user by email
-    users existingUser = usersService.getUserByEmail(signInRequest.getEmail());
+    Users existingUser = usersService.getUserByEmail(signInRequest.getEmail());
     
     // Check if the user exists and passwords match
     if (existingUser != null && existingUser.getPassword().equals(signInRequest.getPassword())) {

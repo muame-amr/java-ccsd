@@ -8,24 +8,24 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class usersService {
+public class UsersService {
 
     @Autowired
-    private usersRepository usersRepository;
+    private UsersRepository usersRepository;
 
-    public List<users> getAllUsers() {
+    public List<Users> getAllUsers() {
         return usersRepository.findAll();
     }
 
-    public Optional<users> getUserById(String id) {
+    public Optional<Users> getUserById(String id) {
         return usersRepository.findById(id);
     }
 
-    public users addUser(users user) {
+    public Users addUser(Users user) {
         return usersRepository.save(user);
     }
 
-    public users updateUser(String id, users userDetails) {
+    public Users updateUser(String id, Users userDetails) {
         return usersRepository.findById(id).map(user -> {
             user.setEmail(userDetails.getEmail());
             user.setPassword(userDetails.getPassword());
@@ -45,7 +45,7 @@ public class usersService {
         usersRepository.deleteById(id);
     }
 
-    public users getUserByEmail(String email) {
+    public Users getUserByEmail(String email) {
         return usersRepository.findAll().stream()
                 .filter(user -> user.getEmail().equals(email))
                 .findFirst().orElse(null);
