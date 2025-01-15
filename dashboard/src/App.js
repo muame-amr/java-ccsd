@@ -16,6 +16,7 @@ import AddWebsiteGallery from "./HodViews/scense/websites/addWebsiteGallery";
 import Landing from "./landingpage/landing";
 import "./App.css";
 import Payment from "./payment/payment";
+import SignUp from "./FrontEnd/scense/SignUpSide";
 
 
 const HodViewsLayout = ({ children }) => {
@@ -52,6 +53,12 @@ function App() {
         path="/sign-in"
         element={
           <SignInSide />
+        }
+      />
+      <Route
+        path="/sign-up"
+        element={
+          <SignUp />
         }
       />
       <Route

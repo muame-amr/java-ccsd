@@ -1,4 +1,4 @@
-//users.java
+// users.java
 package com.example.ccsd.Users;
 
 import org.springframework.data.annotation.Id;
@@ -22,6 +22,22 @@ public class Users {
     private String dob;
     private byte[] profPic;
 
+    public Users() {
+
+    }
+
+    public Users(byte[] profPic, String dob, String username, String role, String address, String phoneNumber, String lastName, String firstName, String password, String email) {
+        this.profPic = profPic;
+        this.dob = dob;
+        this.username = username;
+        this.role = role;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.password = password;
+        this.email = email;
+    }
 
     // Getters and Setters
     public String getId() {

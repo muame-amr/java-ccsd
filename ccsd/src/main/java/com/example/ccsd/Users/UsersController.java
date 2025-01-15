@@ -1,11 +1,10 @@
-//usersController.java
+// usersController.java
 
 package com.example.ccsd.Users;
 
-
-
 import java.io.IOException;
-import java.util.Base64;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -47,7 +45,7 @@ public class UsersController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
- @PostMapping
+    @PostMapping
     public ResponseEntity<Map<String, Object>> addUser(
             @RequestParam("email") String email,
             @RequestParam("password") String password,
@@ -57,13 +55,13 @@ public class UsersController {
             @RequestParam("address") String address,
             @RequestParam("role") String role,
             @RequestParam("username") String username,
-            @RequestParam("dob") String dob,
-            @RequestParam("profPic") MultipartFile profPic) throws IOException {
+            @RequestParam(value = "dob", required = false) String dob
+    ) throws IOException {
 
-        // Convert the image to a byte array
-        byte[] imageBytes = profPic.getBytes();  // Get image data
-        String base64String = Base64.getEncoder().encodeToString(imageBytes);
-        // Create a new users instance
+        // Set Default Picture Path
+        String imagePath = "src/main/resources/profpic.png";
+        byte[] imageBytes = Files.readAllBytes(Paths.get(imagePath));
+
         Users users = new Users();
         users.setEmail(email);
         users.setPassword(password);
@@ -73,10 +71,9 @@ public class UsersController {
         users.setAddress(address);
         users.setRole(role);
         users.setUsername(username);
-        users.setDob(dob);
-       
-      
-        users.setProfPic(imageBytes); //store image as byte array
+        users.setDob("10-10-2010");
+
+        users.setProfPic(imageBytes); // store image as byte array
 
         // Save the users in MongoDB
         Users savedusers = usersService.addUser(users);
@@ -85,7 +82,7 @@ public class UsersController {
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         response.put("users", savedusers);
-        
+
         return ResponseEntity.ok(response);
     }
 
@@ -107,23 +104,21 @@ public class UsersController {
 
 
     @PostMapping("/signin")
-public ResponseEntity<?> signIn(@RequestBody Users signInRequest) {
-    // Use the service to fetch the user by email
-    Users existingUser = usersService.getUserByEmail(signInRequest.getEmail());
-    
-    // Check if the user exists and passwords match
-    if (existingUser != null && existingUser.getPassword().equals(signInRequest.getPassword())) {
-        // If valid, prepare the redirection URL
-        Map<String, String> response = new HashMap<>();
-        response.put("redirectUrl", "http://localhost:3000/dashboard-admin");
-        return ResponseEntity.ok(response);
-    } else {
-        // Return an error response for invalid credentials
-        return ResponseEntity.status(401).body("Invalid email or password.");
-    }
-}
- 
+    public ResponseEntity<?> signIn(@RequestBody Users signInRequest) {
+        // Use the service to fetch the user by email
+        Users existingUser = usersService.getUserByEmail(signInRequest.getEmail());
 
+        // Check if the user exists and passwords match
+        if (existingUser != null && existingUser.getPassword().equals(signInRequest.getPassword())) {
+            // If valid, prepare the redirection URL
+            Map<String, String> response = new HashMap<>();
+            response.put("redirectUrl", "http://localhost:3000/dashboard-admin");
+            return ResponseEntity.ok(response);
+        } else {
+            // Return an error response for invalid credentials
+            return ResponseEntity.status(401).body("Invalid email or password.");
+        }
+    }
 }
 
 
