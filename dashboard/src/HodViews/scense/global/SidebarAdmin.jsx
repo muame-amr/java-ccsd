@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import profileAvatar from '../../../assets/profile-avatar.png';
 import { tokens } from "../../../base/theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -9,7 +9,7 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
 import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
 import CategoryIcon from '@mui/icons-material/Category';
-
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -25,7 +25,6 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
         icon={icon}
       >
         <Typography>{title}</Typography>
-        
       </MenuItem>
     </Link>
   );
@@ -36,6 +35,14 @@ const SidebarAdmin = () => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear any stored data (e.g., tokens)
+    localStorage.clear();
+    // Redirect to the login page
+    navigate("/sign-in");
+  };
 
   return (
     <Box
@@ -57,7 +64,7 @@ const SidebarAdmin = () => {
         },
       }}
     >
-      <Sidebar collapsed={isCollapsed} backgroundColor= "`${colors.primary[400]}`">
+      <Sidebar collapsed={isCollapsed} backgroundColor={`${colors.primary[400]}`}>
         <Menu iconShape="square">
           {/* LOGO AND MENU ICON */}
           <MenuItem
@@ -103,7 +110,7 @@ const SidebarAdmin = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                 Admin
+                  Admin
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
                   Super Admin
@@ -120,7 +127,6 @@ const SidebarAdmin = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
 
             <Typography
               variant="h6"
@@ -155,13 +161,7 @@ const SidebarAdmin = () => {
               variant="h6"
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
-            ></Typography>
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
             >
-              
               Products and Accounting
             </Typography>
             <Item
@@ -172,6 +172,17 @@ const SidebarAdmin = () => {
               setSelected={setSelected}
             />
 
+            {/* Logout Button */}
+            <MenuItem
+              onClick={handleLogout}
+              icon={<LogoutIcon />}
+              style={{
+                marginTop: "20px",
+                color: colors.redAccent[400],
+              }}
+            >
+              <Typography>Logout</Typography>
+            </MenuItem>
           </Box>
         </Menu>
       </Sidebar>
