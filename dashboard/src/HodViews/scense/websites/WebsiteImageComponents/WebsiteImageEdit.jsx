@@ -4,24 +4,22 @@ import IconButton from '@mui/material/IconButton';
 import Input from '@mui/material/Input';
 import FilledInput from '@mui/material/FilledInput';
 import InputLabel from '@mui/material/InputLabel';
-import { tokens } from "../../../base/theme";
-import Header from "../../../components/Header";
+import { tokens } from "../../../../base/theme";
+import Header from "../../../../components/Header";
 import InputAdornment from '@mui/material/InputAdornment';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
-import { useNavigate } from 'react-router-dom';
-import SaveItemsAdmin from '../../saveItemAdmin';
+import { useNavigate, useParams } from 'react-router-dom';
+import SaveItemsAdmin from '../../../saveItemAdmin';
+import UpdateItemAdmin from '../../../updateItemAdmin';
 
 import Select from '@mui/material/Select';
 import SmartToyOutlinedIcon from '@mui/icons-material/SmartToyOutlined';
 
-import CK from '../../../Editor/ck';
-import WebsiteImageList from './WebsiteImageComponents/WebsiteImageList';
-
-
-const AddWebsiteImage = () => {
+const WebsiteImageEdit = () => {
+    const { imgId } = useParams();
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [image, setImage] = useState(null);
@@ -69,7 +67,7 @@ const AddWebsiteImage = () => {
         event.preventDefault(); // Prevent the default form submission behavior
       
         try {
-          const success = await SaveItemsAdmin.addWebsiteImageAdmin(place, postShortDescription, tag, title, postSlug, content, status, date, image);
+          const success = await UpdateItemAdmin.updateWebsiteImageAdmin(place, postShortDescription, tag, title, postSlug, content, status, date, image);
           
           if (success) {
             navigate("/website-components-admin");
@@ -82,7 +80,31 @@ const AddWebsiteImage = () => {
           console.error("Saving Error:", error);
           alert("An error occurred while saving.");
         }
-      }  
+      }    
+
+    useEffect(() =>{
+        const fetchData = async() =>{
+            try{
+               const response =  await UpdateItemAdmin.getImageById(imgId);
+               if(response){
+                setImage();
+                setCategories();
+                setPostShortDescription();
+                setTag();
+                setTitle();
+                setPostSlug();
+                setStatus();
+                setDate();
+                setPlace();
+               }
+            }catch(error){
+                // Handle network or other errors
+                console.error("Saving Error:", error);
+                alert("An error occurred while saving.");
+            }
+        };
+        fetchData();
+    }, []); //on component mounted
 
   return (
 
@@ -99,7 +121,7 @@ const AddWebsiteImage = () => {
                 <Button color='error' variant='contained' onClick={functionCloseAiImage}>Close</Button>
             </DialogActions>
         </Dialog>
-        <Header title="Add Image" subtitle="Please Fill All the Fields" />
+        <Header title="Edit Image" subtitle="Please Fill All the Fields" />
             
         <Box sx={{ display: 'flex', flexWrap: 'wrap' }} component="form" noValidate onSubmit={handleAddBlog}>
                 <TextField
@@ -211,19 +233,9 @@ const AddWebsiteImage = () => {
               >
                 Save
               </Button>
-        </Box>
-
-        <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-            <span 
-                style={{ 'margin-left':'10px', 'margin-top':'10px', 'font-size': '36px', 'font-weight': 'bold' }}>
-                List of Website Images
-            </span>
-            <Box sx={{ m: 1, width: '100%', marginTop: '20px' }}>
-                <WebsiteImageList />
-            </Box>       
         </Box> 
     </Box>
   );
 };
 
-export default AddWebsiteImage;
+export default WebsiteImageEdit;
