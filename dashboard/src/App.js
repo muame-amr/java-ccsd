@@ -13,6 +13,7 @@ import AddProduct from "./HodViews/scense/services/addProduct";
 import AddWebsiteText from "./HodViews/scense/websites/addWebsiteTexts";
 import AddWebsiteImage from "./HodViews/scense/websites/addWebsiteImage";
 import AddWebsiteGallery from "./HodViews/scense/websites/addWebsiteGallery";
+import WebsiteImageEdit from "./HodViews/scense/websites/WebsiteImageComponents/WebsiteImageEdit";
 import Landing from "./landingpage/landing";
 import "./App.css";
 import Payment from "./payment/payment";
@@ -117,6 +118,14 @@ function App() {
         }
       />
       <Route
+        path="/website-image-admin-edit/:imgId"
+        element={
+          <HodViewsLayout>
+            <WebsiteImageEdit />
+          </HodViewsLayout>
+        }
+      />
+      <Route
         path="/website-image-gallery"
         element={
           <HodViewsLayout>
@@ -141,8 +150,6 @@ function App() {
           </HodViewsLayout>
         }
       />
-
-      
     </Routes>
   );
 }
