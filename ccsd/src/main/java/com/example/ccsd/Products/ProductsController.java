@@ -46,12 +46,17 @@ public class ProductsController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Products> getProductskById(@PathVariable String id) {
-//        return productsService.getProductsById(id) // Get products by slug
-//                .map(ResponseEntity::ok)
-//                .orElse(ResponseEntity.notFound().build());
-        return null;
+    public ResponseEntity<Products> getProductById(@PathVariable String id) {
+        try {
+            // Fetch the product by ID using the service layer
+            Products product = productsService.getProductsById(id);
+            return ResponseEntity.ok(product); // Return the product with HTTP 200 status
+        } catch (RuntimeException e) {
+            // If product is not found, return HTTP 404 status
+            return ResponseEntity.notFound().build();
         }
+    }
+
 
     // add product based on the 
     @PostMapping
