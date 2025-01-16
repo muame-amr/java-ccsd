@@ -23,6 +23,7 @@ const WebsiteImageEdit = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [image, setImage] = useState(null);
+    const [imageBase64, setImageBase64] = useState(null);
 
     const [categories, setCategories] = useState([]); // to store the list of categories    
     const [postShortDescription, setPostShortDescription] = useState(null);
@@ -60,17 +61,33 @@ const WebsiteImageEdit = () => {
 
     const handleImageChange = (event) => {
         const selectedImage = event.target.files[0];
-        setImage(selectedImage);
+        if (selectedImage) {
+            const reader = new FileReader();
+
+            // Generate Base64 string
+            reader.onload = () => {
+                var result = reader.result;
+                setImageBase64(result); // Base64 string is stored here
+                setImage(result.split(',')[1]);
+                
+            };
+            // Read the file as a Data URL (Base64)
+            reader.readAsDataURL(selectedImage);
+        }
+        console.log(selectedImage);
+        //setImage(selectedImage);
+        
     };
 
     const handleAddBlog = async (event) => {
         event.preventDefault(); // Prevent the default form submission behavior
       
         try {
-          const success = await UpdateItemAdmin.updateWebsiteImageAdmin(place, postShortDescription, tag, title, postSlug, content, status, date, image);
+
+          const success = await UpdateItemAdmin.updateWebsiteImageAdmin(imgId, place, postShortDescription, tag, title, postSlug, content, status, date, image);
           
           if (success) {
-            navigate("/website-components-admin");
+            window.location.href="/website-image-admin"
           } else {
             // Handle login failure and display an error message to the user
             alert("Error Saving data");
@@ -83,19 +100,24 @@ const WebsiteImageEdit = () => {
       }    
 
     useEffect(() =>{
+        console.log("Started");
+        console.log(imgId);
+        console.log();
         const fetchData = async() =>{
             try{
                const response =  await UpdateItemAdmin.getImageById(imgId);
+               console.log(response);
                if(response){
-                setImage();
-                setCategories();
-                setPostShortDescription();
-                setTag();
-                setTitle();
-                setPostSlug();
-                setStatus();
-                setDate();
-                setPlace();
+                    setImageBase64('data:image/png;base64,'+response.image);
+                    setImage(response.image);
+                    setCategories(response.category);
+                    setPostShortDescription(response.postShortDescription);
+                    setTag(response.tag);
+                    setTitle(response.title);
+                    setPostSlug(response.postSlug);
+                    setStatus(response.status);
+                    setDate(response.date);
+                    setPlace(response.place);
                }
             }catch(error){
                 // Handle network or other errors
@@ -130,12 +152,14 @@ const WebsiteImageEdit = () => {
                 id="title"
                 sx={{ m: 1, width: '30.5%' }}
                 variant="filled"
+                value={title}
                 />
                 <FormControl sx={{ m: 1, width: '30.5%' }} variant="filled">
                     <FilledInput
                     onChange={(e) => setDate(e.target.value)}
                         id='date'
                         type='date'
+                        value={date}
                                             
                     >
 
@@ -162,6 +186,7 @@ const WebsiteImageEdit = () => {
                    onChange={(e) => setTag(e.target.value)}
                     id='tag'
                     type='text'
+                    value={tag}
                     endAdornment = {
                         <InputAdornment position='end'>
                             Use AI to Generate SEO Tags
@@ -234,6 +259,13 @@ const WebsiteImageEdit = () => {
                 Save
               </Button>
         </Box> 
+        <Box sx={{ mt: 2, textAlign: 'center' }}>
+            <img
+                src={imageBase64}
+                alt="Preview"
+                style={{ maxWidth: '100%', maxHeight: '300px', borderRadius: '8px', boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)' }}
+            />
+        </Box>
     </Box>
   );
 };

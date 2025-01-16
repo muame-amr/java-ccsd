@@ -1,6 +1,7 @@
 package com.example.ccsd.WebsiteImages;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +64,7 @@ public class WebsiteImagesController {
 
         // Convert the image to a byte array
         byte[] imageBytes = image.getBytes();  // Get image data
-
+        //String base64String = Base64.getEncoder().encodeToString(imageBytes);
         // Create a new Product instance
         WebsiteImages websiteImages = new WebsiteImages();
         websiteImages.setTitle(title);
@@ -97,8 +98,8 @@ public class WebsiteImagesController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteWebsiteImages(@PathVariable String id) {
-       websiteImagesService.deleteWebsiteImages(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteWebsiteImages(@PathVariable String id) {
+        websiteImagesService.deleteWebsiteImages(id);
+        return ResponseEntity.ok("Image deleted successfully");
     }
 }

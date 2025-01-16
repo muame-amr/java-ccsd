@@ -14,7 +14,7 @@ const UpdateItemAdmin = {
 
         try{
             const response = await axios.get(
-                `${API_BASE_URL}/api/WebsiteImage`,
+                `${API_BASE_URL}/api/WebsiteImage/${id}`,
                 {
                   headers: {
                     'Content-Type': 'multipart/form-data', // Set content type to multipart/form-data for file uploads
@@ -38,33 +38,31 @@ const UpdateItemAdmin = {
         }
     },
 
-  async updateWebsiteImageAdmin( place, postShortDescription, tag, title, postSlug, content, status, date, image) {
+  async updateWebsiteImageAdmin(id, place, postShortDescription, tag, title, postSlug, content, status, date, image) {
     const token = await localStorage.getItem('jwtToken');
     const username = await localStorage.getItem('userName');
 
     try {
-      const formData = new FormData();
-      formData.append('author', username);
-      formData.append('postShortDescription', postShortDescription);
-      formData.append('tag', tag);
-      formData.append('place', place);
-      formData.append('title', title);
-      formData.append('postSlug', postSlug);
-      formData.append('content', content);
-      formData.append('status', status);
-      formData.append('date', date);
+      const requestBody = {
+        author: username,
+        postShortDescription: postShortDescription,
+        tag: tag,
+        place: place,
+        title: title,
+        postSlug: postSlug,
+        content: content,
+        status: status,
+        date: date,
+        image: image
+      };
 
-      if (image) {
-        formData.append('image', image); // Assuming 'image' is the key on the server to handle file uploads
-      }
-
-      const response = await axios.post(
-        `${API_BASE_URL}/api/WebsiteImage`,
-        formData,
+      const response = await axios.put(
+        `${API_BASE_URL}/api/WebsiteImage/${id}`,
+        requestBody,
         {
           headers: {
-            'Content-Type': 'multipart/form-data', // Set content type to multipart/form-data for file uploads
             Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
           },
         }
       );

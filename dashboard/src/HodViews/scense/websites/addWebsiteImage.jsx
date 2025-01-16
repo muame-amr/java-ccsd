@@ -72,7 +72,7 @@ const AddWebsiteImage = () => {
           const success = await SaveItemsAdmin.addWebsiteImageAdmin(place, postShortDescription, tag, title, postSlug, content, status, date, image);
           
           if (success) {
-            navigate("/website-components-admin");
+            window.location.reload();
           } else {
             // Handle login failure and display an error message to the user
             alert("Error Saving data");
