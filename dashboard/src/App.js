@@ -7,6 +7,7 @@ import DashboardAdmin from "./HodViews/scense/dashboard";
 import TeamAdmin from "./HodViews/scense/team";
 import AddTeam from "./HodViews/scense/team/addTeam";
 import SignInSide from "./FrontEnd/scense/SignInSide";
+import SignUpSide from "./FrontEnd/scense/SignUpSide";
 import WebsiteComponentsAdmin from "./HodViews/scense/websites/websiteComponents";
 import Services from "./HodViews/scense/services";
 import AddProduct from "./HodViews/scense/services/addProduct";
@@ -16,7 +17,7 @@ import AddWebsiteGallery from "./HodViews/scense/websites/addWebsiteGallery";
 import Landing from "./landingpage/landing";
 import "./App.css";
 import Payment from "./payment/payment";
-import SignUp from "./FrontEnd/scense/SignUpSide";
+
 
 
 const HodViewsLayout = ({ children }) => {
@@ -58,9 +59,10 @@ function App() {
       <Route
         path="/sign-up"
         element={
-          <SignUp />
+          <SignUpSide />
         }
       />
+
       <Route
         path="/payment"
         element={

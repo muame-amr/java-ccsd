@@ -71,8 +71,7 @@ public class UsersController {
         users.setAddress(address);
         users.setRole(role);
         users.setUsername(username);
-        users.setDob("10-10-2010");
-
+        users.setDob(dob);
         users.setProfPic(imageBytes); // store image as byte array
 
         // Save the users in MongoDB

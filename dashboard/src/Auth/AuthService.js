@@ -8,7 +8,6 @@ const AuthService = {
 			// const response = await axios.post(`${API_BASE_URL}/api/users`, {
 			//     email,
 			//     password,
-
 			// },
 
 			const response = await axios.get(
@@ -68,13 +67,13 @@ const AuthService = {
 			// 	},
 			// },
 			const response = await axios.post(
-				`${API_BASE_URL}/api/users?username=${username}
+			    `${API_BASE_URL}/api/users?username=${username}
 				&email=${email}
 				&password=${password}
 				&firstName=${firstName}
-				&lastName=${lastName},
-				&phoneNumber=${phone},
-				&address=${address},
+				&lastName=${lastName}
+				&phoneNumber=${phone}
+				&address=${address}
 				&role=${role}`,
 				{
 					headers: {
