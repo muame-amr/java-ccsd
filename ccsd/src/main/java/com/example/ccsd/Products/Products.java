@@ -3,9 +3,8 @@ package com.example.ccsd.Products;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
-@Document(collection = "products")
+@Document(collection = "Products")
 public class Products {
-
 
     private String title; // from productController
     private String postSlug;

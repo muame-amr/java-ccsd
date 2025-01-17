@@ -107,8 +107,4 @@ public class WebsiteImages {
     public void setimage(byte[] image) {
         this.image = image;
     }
-
-
-
-
 }

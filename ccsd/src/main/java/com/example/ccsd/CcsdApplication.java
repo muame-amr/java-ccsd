@@ -34,7 +34,7 @@ public class CcsdApplication {
                     "+601110111012",
                     "Doe",
                     "John",
-                    "passwd",
+                    "cGFzc3dk", // passwd
                     "john.doe@admin.my"
             );
 

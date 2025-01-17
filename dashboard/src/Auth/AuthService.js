@@ -10,7 +10,7 @@ const AuthService = {
 			//     password,
 
 			// },
-
+			password = btoa(password);
 			const response = await axios.get(
 				`${API_BASE_URL}/api/users`, // Use the correct endpoint for sign-in
 				{ email, password }, // Pass email and password in the request body
@@ -46,14 +46,7 @@ const AuthService = {
 	) {
 		const username = await localStorage.getItem("userName");
 
-		console.log(email);
-		console.log(password);
-		console.log(firstName);
-		console.log(userName);
-		console.log(phone);
-		console.log(address);
-		console.log(role);
-		console.log(lastName);
+		password = btoa(password);
 		try {
 			// {
 			// 	params: {
@@ -72,9 +65,9 @@ const AuthService = {
 				&email=${email}
 				&password=${password}
 				&firstName=${firstName}
-				&lastName=${lastName},
-				&phoneNumber=${phone},
-				&address=${address},
+				&lastName=${lastName}
+				&phoneNumber=${phone}
+				&address=${address}
 				&role=${role}`,
 				{
 					headers: {

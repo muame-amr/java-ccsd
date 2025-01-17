@@ -3,7 +3,7 @@ package com.example.ccsd.WebsiteTexts;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "websitetexts")
+@Document(collection = "WebsiteTexts")
 public class WebsiteTexts {
     @Id
     private String id;

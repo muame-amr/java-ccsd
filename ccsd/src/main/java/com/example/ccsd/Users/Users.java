@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Base64;
 
-@Document(collection = "user")
+@Document(collection = "User")
 public class Users {
 
     @Id
