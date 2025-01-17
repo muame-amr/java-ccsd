@@ -1,0 +1,85 @@
+.list {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: space-between;
+  margin-bottom: 5px;;
+}
+
+.list__imgContainer {
+  position: relative;
+  margin-right: 12px;
+  flex-shrink: 0; 
+}
+
+.list__image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.list__status {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 12px;
+  height: 12px;
+  background-color: green;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.list__details {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.list__title {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.list__date {
+  font-size: 14px;
+  color: gray;
+  margin: 4px 0 0;
+}
+
+.list__actions {
+  display: flex;
+  gap: 8px; /* Space between buttons */
+}
+
+.list__button {
+  padding: 6px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-button {
+  background-color: #007bff; /* Blue */
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.delete-button {
+  background-color: #dc3545; /* Red */
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #a71d2a; /* Darker red on hover */
+}
