@@ -6,40 +6,40 @@ axios.defaults.withCredentials = true;
 const API_BASE_URL = "http://localhost:8082";
 
 const TeamMemberSkeleton = () => (
-	<div className="animate-pulse bg-white rounded-2xl shadow-lg p-4">
-		<div className="h-48 w-48 mx-auto bg-gray-200 rounded-full mb-4" />
+	<div className="animate-pulse bg-white rounded-xl shadow-md p-6">
+		<div className="h-40 w-40 mx-auto bg-gray-200 rounded-full mb-6" />
 		<div className="space-y-3">
-			<div className="h-4 bg-gray-200 rounded w-2/3 mx-auto" />
+			<div className="h-6 bg-gray-200 rounded w-3/4 mx-auto" />
 			<div className="h-4 bg-gray-200 rounded w-1/2 mx-auto" />
 		</div>
 	</div>
 );
 
 const TeamMember = ({ member }) => (
-	<div className="bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
+	<div className="bg-white rounded-xl shadow-md p-6 text-center transition-all duration-300 hover:shadow-lg hover:-translate-y-2">
 		<div className="relative mb-6">
 			{member.profPic ? (
 				<img
 					src={`data:image/jpeg;base64,${member.profPic}`}
 					alt={member.firstName}
-					className="w-48 h-48 rounded-full mx-auto object-cover border-4 border-indigo-100"
+					className="w-40 h-40 rounded-full mx-auto object-cover border-4 border-indigo-50"
 				/>
 			) : (
-				<div className="w-48 h-48 rounded-full mx-auto bg-indigo-100 flex items-center justify-center">
+				<div className="w-40 h-40 rounded-full mx-auto bg-gradient-to-br from-indigo-50 to-purple-50 flex items-center justify-center">
 					<span className="text-4xl font-semibold text-indigo-600">
 						{member.firstName.charAt(0)}
 					</span>
 				</div>
 			)}
 		</div>
-		<h3 className="text-xl font-semibold text-gray-900 mb-2">
-			{member.firstName}
+		<h3 className="text-2xl font-bold text-gray-900 mb-2">
+			{member.firstName} {member.lastName}
 		</h3>
 		<p className="text-indigo-600 font-medium">{member.role}</p>
 	</div>
 );
 
-const Team = () => {
+export const Team = () => {
 	const [users, setUsers] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -71,16 +71,16 @@ const Team = () => {
 	}, []);
 
 	return (
-		<section id="team" className="py-20 bg-gray-50">
+		<section id="team" className="py-20 bg-gradient-to-b from-gray-50 to-white">
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="text-center mb-16">
-					<h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-						Meet the Team
+					<h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+						Meet Our Team
 					</h2>
-					<div className="w-24 h-1 bg-indigo-600 mx-auto rounded-full mb-8" />
-					<p className="text-gray-600 max-w-2xl mx-auto">
-						Our team of dedicated professionals working to deliver excellence in
-						IT services
+					<div className="w-24 h-1.5 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto rounded-full mb-8" />
+					<p className="text-gray-600 max-w-2xl mx-auto text-lg">
+						Our team of dedicated professionals is here to deliver excellence in
+						IT services and innovation.
 					</p>
 				</div>
 
@@ -90,7 +90,7 @@ const Team = () => {
 					</div>
 				)}
 
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
 					{isLoading ? (
 						[...Array(4)].map((_, index) => (
 							<TeamMemberSkeleton key={`skeleton-${index}`} />

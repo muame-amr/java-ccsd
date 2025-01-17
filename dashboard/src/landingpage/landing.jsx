@@ -9,7 +9,7 @@ import GetData from "../data/getData.js";
 import Navigation from "./navigation.jsx";
 import Features from "./features.jsx";
 import Header from "./header.jsx";
-import Team from "./team.jsx";
+import Team from "./Team.jsx";
 
 const Landing = () => {
 	const [backendData, setBackendData] = useState({});

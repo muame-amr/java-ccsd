@@ -34,18 +34,18 @@ export const Contact = ({ data }) => {
 	};
 
 	return (
-		<section className="py-20 bg-white">
+		<section className="py-20 bg-gray-900">
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="max-w-7xl mx-auto">
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 						{/* Contact Form */}
 						<div>
 							<div className="mb-12">
-								<h2 className="text-3xl font-bold text-gray-900 mb-4">
+								<h2 className="text-3xl font-bold text-white mb-4">
 									Get In Touch
 								</h2>
 								<div className="w-24 h-1 bg-indigo-600 rounded-full mb-6" />
-								<p className="text-gray-600">
+								<p className="text-white">
 									Fill out the form and we'll get back to you soon.
 								</p>
 							</div>
@@ -189,7 +189,7 @@ export const Contact = ({ data }) => {
 									</div>
 								</div>
 
-								<div className="pt-6 mt-6 border-t border-gray-200">
+								<div className="pt-6 border-t border-gray-200">
 									<div className="flex space-x-4">
 										{data?.facebook && (
 											<a
