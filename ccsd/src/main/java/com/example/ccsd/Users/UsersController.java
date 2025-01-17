@@ -59,7 +59,7 @@ public class UsersController {
     ) throws IOException {
 
         // Set Default Picture Path
-        String imagePath = "src/main/resources/profpic.png";
+        String imagePath = "src/main/resources/profpic.jpg";
         byte[] imageBytes = Files.readAllBytes(Paths.get(imagePath));
 
         Users users = new Users();
@@ -104,8 +104,10 @@ public class UsersController {
 
 
     @PostMapping("/signin")
-    public ResponseEntity<?> signIn(@RequestBody Users signInRequest) {
+    public ResponseEntity<?> signIn(@RequestBody SignInDTO signInRequest) {
         // Use the service to fetch the user by email
+        System.out.println(signInRequest.getEmail());
+        System.out.println(signInRequest.getPassword());
         Users existingUser = usersService.getUserByEmail(signInRequest.getEmail());
 
         // Check if the user exists and passwords match

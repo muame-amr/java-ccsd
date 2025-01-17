@@ -11,26 +11,39 @@ const AuthService = {
 
 			// },
 			password = btoa(password);
-			const response = await axios.get(
-				`${API_BASE_URL}/api/users`, // Use the correct endpoint for sign-in
-				{ email, password }, // Pass email and password in the request body
-				{
-					headers: {
-						"Content-Type": "application/json",
-					},
-				}
-			);
+			const response = await axios({
+				method: "post",
+				url: `${API_BASE_URL}/api/users/signin`, // Updated port to 8082
+				data: {
+					email: email,
+					password: password,
+				},
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
 
-			if (response.status === 200) {
-				// Store the JWT token in localStorage
-				localStorage.setItem("jwtToken", response.data.token);
-				localStorage.setItem("userName", response.data.username);
-				localStorage.setItem("userType", response.data.user_type);
-				return true;
+			// If successful, response.data will contain the redirectUrl
+			if (response.data && response.data.redirectUrl) {
+				// Redirect to the dashboard
+				window.location.href = response.data.redirectUrl;
 			}
+
+			return response.data;
 		} catch (error) {
-			console.error("Login failed:", error);
-			return false;
+			if (error.response) {
+				// The server responded with a status code outside the 2xx range
+				if (error.response.status === 401) {
+					throw new Error("Invalid email or password");
+				}
+				throw new Error(error.response.data);
+			} else if (error.request) {
+				// The request was made but no response was received
+				throw new Error("No response received from server");
+			} else {
+				// Something happened in setting up the request
+				throw new Error("Error setting up the request");
+			}
 		}
 	},
 
