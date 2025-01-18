@@ -97,14 +97,14 @@ function App() {
 					</HodViewsLayout>
 				}
 			/>
-      <Route
-        path="/website-image-admin-edit/:imgId"
-        element={
-          <HodViewsLayout>
-            <WebsiteImageEdit />
-          </HodViewsLayout>
-        }
-      />
+			<Route
+				path="/website-image-admin-edit/:imgId"
+				element={
+					<HodViewsLayout>
+						<WebsiteImageEdit />
+					</HodViewsLayout>
+				}
+			/>
 			<Route
 				path="/website-image-gallery"
 				element={
@@ -114,24 +114,24 @@ function App() {
 				}
 			/>
 
-      <Route
-        path="/services"
-        element={
-          <HodViewsLayout>
-            <Services />
-          </HodViewsLayout>
-        }
-      />
-      <Route
-        path="/add-product"
-        element={
-          <HodViewsLayout>
-            <AddProduct />
-          </HodViewsLayout>
-        }
-      />
-    </Routes>
-  );
+			<Route
+				path="/services"
+				element={
+					<HodViewsLayout>
+						<Services />
+					</HodViewsLayout>
+				}
+			/>
+			<Route
+				path="/add-product"
+				element={
+					<HodViewsLayout>
+						<AddProduct />
+					</HodViewsLayout>
+				}
+			/>
+		</Routes>
+	);
 }
 
 export default App;

@@ -25,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class GalleryController {
 
     @Autowired
-    private com.example.ccsd.Gallery.GalleryService GalleryService;
+    private GalleryService GalleryService;
 
     @GetMapping
     public ResponseEntity<List<Gallery>> getAllGallerys() {

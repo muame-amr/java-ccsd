@@ -141,7 +141,7 @@ const SaveItemsAdmin = {
       }
 
       const response = await axios.post(
-        `${API_BASE_URL}/api/Gallery`,
+        `${API_BASE_URL}/api/gallery`,
         formData,
         {
           headers: {

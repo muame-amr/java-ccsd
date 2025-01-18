@@ -66,7 +66,7 @@ export const Gallery = () => {
 	useEffect(() => {
 		const fetchGallery = async () => {
 			try {
-				const response = await fetch(`${API_BASE_URL}/api/Gallery`, {
+				const response = await fetch(`${API_BASE_URL}/api/gallery`, {
 					headers: {
 						"Content-Type": "application/json",
 						Authorization: `Bearer ${token}`,
