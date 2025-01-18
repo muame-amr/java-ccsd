@@ -27,12 +27,23 @@ public class GalleryService {
     }
 
     @Transactional
-    public Gallery updateGallery(String id, Gallery galleryDetails) {
+    public Gallery updateGallery(String id, CreateUpdateDTO galleryDetails) {
         try {
             Optional<Gallery> galleryOptional = galleryRepository.findById(id);
             if (galleryOptional.isEmpty())
                 throw new UserNotFoundException("User does not exists!");
-            return galleryOptional.get();
+            Gallery gallery = galleryOptional.get();
+
+            gallery.setTitle(galleryDetails.getTitle());
+            gallery.setPostSlug(galleryDetails.getPostSlug());
+            gallery.setPostShortDescription(galleryDetails.getPostShortDescription());
+            gallery.setTag(galleryDetails.getTag());
+            gallery.setPlace(galleryDetails.getPlace());
+            gallery.setDate(galleryDetails.getDate());
+            gallery.setStatus(galleryDetails.getStatus());
+            gallery.setContent(galleryDetails.getContent());
+
+            return galleryRepository.save(gallery);
         } catch (UserNotFoundException e) {
             e.printStackTrace();
             return null;

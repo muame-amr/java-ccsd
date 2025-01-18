@@ -5,9 +5,7 @@ import com.example.ccsd.Users.UsersRepository;
 import com.example.ccsd.Users.UsersService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
 import java.nio.file.Files;
@@ -22,7 +20,7 @@ public class CcsdApplication {
     }
 
     @Bean
-    public CommandLineRunner runner(UsersService usersService, UsersRepository usersRepository) {
+    public CommandLineRunner runner(UsersService usersService) {
         return args -> {
 
             String imagePath = "src/main/resources/profpic.jpg";
@@ -40,8 +38,8 @@ public class CcsdApplication {
                     "john.doe@admin.my"
             );
 
-            Optional<Users> userExist = usersRepository.findByEmail("john.doe@admin.my");
-            if (userExist.isEmpty()) {
+            Users userExist = usersService.getUserByEmail("john.doe@admin.my");
+            if (userExist == null) {
                 usersService.addUser(adminUser);
             }
         };

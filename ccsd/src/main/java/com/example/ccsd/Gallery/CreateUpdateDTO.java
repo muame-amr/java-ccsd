@@ -1,13 +1,7 @@
 package com.example.ccsd.Gallery;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "Gallery")
-public class Gallery {
-
-    @Id
-    private String id;
+public class CreateUpdateDTO {
     private String title;
     private String postSlug;
     private String postShortDescription;
@@ -18,11 +12,10 @@ public class Gallery {
     private String image;
     private String content;
 
-    public Gallery() {
+    public CreateUpdateDTO() {
     }
 
-    public Gallery(String id, String title, String postSlug, String postShortDescription, String tag, String place, String date, String status, String image, String content) {
-        this.id = id;
+    public CreateUpdateDTO(String title, String postSlug, String postShortDescription, String tag, String place, String date, String status, String image, String content) {
         this.title = title;
         this.postSlug = postSlug;
         this.postShortDescription = postShortDescription;
@@ -30,16 +23,7 @@ public class Gallery {
         this.place = place;
         this.date = date;
         this.status = status;
-        this.image = image;
         this.content = content;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -98,14 +82,6 @@ public class Gallery {
         this.status = status;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public String getContent() {
         return content;
     }
@@ -113,21 +89,4 @@ public class Gallery {
     public void setContent(String content) {
         this.content = content;
     }
-
-    @Override
-    public String toString() {
-        return "Gallery{" +
-                "title='" + title + '\'' +
-                ", postSlug='" + postSlug + '\'' +
-                ", postShortDescription='" + postShortDescription + '\'' +
-                ", tag='" + tag + '\'' +
-                ", place='" + place + '\'' +
-                ", date='" + date + '\'' +
-                ", status='" + status + '\'' +
-                ", image='" + image + '\'' +
-                ", content='" + content + '\'' +
-                '}';
-    }
 }
-
-

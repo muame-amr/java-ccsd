@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api/Gallery")
+@RequestMapping("/api/gallery")
 
 public class GalleryController {
 
@@ -76,7 +76,7 @@ public class GalleryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Gallery> updategallery(@PathVariable String id, @RequestBody Gallery GalleryDetails) {
+    public ResponseEntity<Gallery> updategallery(@PathVariable String id, @RequestBody CreateUpdateDTO GalleryDetails) {
         Gallery updatedgallery = GalleryService.updateGallery(id, GalleryDetails);
         if (updatedgallery != null) {
             return ResponseEntity.ok(updatedgallery);
